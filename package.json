@@ -1,6 +1,6 @@
 {
   "name": "2019-2-Atom-Frontend-M-Makarov",
-  "homepage": "https://MisterMaks.github.io/2019-2-Atom-Frontend-M-Makarov",
+  "homepage": "https://mistermaks.github.io/2019-2-Atom-Frontend-M-Makarov",
   "description": "Mail.Ru Group Frontend Atom course, 2019",
   "version": "0.1.0",
   "author": "Maksim Makarov",
@@ -44,8 +44,8 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.4.0",
-    "husky": "^0.14.3",
     "gh-pages": "^2.1.1",
+    "husky": "^0.14.3",
     "jest": "^24.8.0",
     "jest-transform-stub": "^2.0.0",
     "jscpd": "^2.0.15",
