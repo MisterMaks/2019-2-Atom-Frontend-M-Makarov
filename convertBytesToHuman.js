@@ -29,6 +29,6 @@ export default function convertBytesToHuman(bytes) {
       i += 1;
     }
   } while (bytes >= b);
-  bytes = String(+(bytes / b).toFixed(2)) + types[i];
+  bytes = String(+(bytes / b).toFixed(2)) + " " + types[i];
   return bytes;
 }
