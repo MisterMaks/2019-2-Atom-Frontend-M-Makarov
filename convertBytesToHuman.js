@@ -14,7 +14,7 @@
 
 export default function convertBytesToHuman(bytes) {
   // your solution goes here
-  var types = ["B", "KB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  var types = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   var b = 0;
   if (Number.isFinite(bytes) == false || bytes < 0) {
     return false;
