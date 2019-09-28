@@ -19,7 +19,7 @@ export default function convertBytesToHuman(bytes) {
   if (Number.isFinite(bytes) == false || bytes < 0) {
     return false;
   }
-  i = 0;
+  var i = 0;
   do {
     if (bytes >= b) {
       if (b == 0) {

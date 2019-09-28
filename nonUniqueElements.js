@@ -28,7 +28,7 @@ export default function nonUniqueElements(data) {
   // your solution goes here
   for (var i = 0; i <= data.length; i++) {
     if (data.reduce((count, n) => (n == data[i] ? count + 1 : count), 0) == 1) {
-      data.reduce(i, 1);
+      data.splice(i, 1);
     }
   }
   return data;
