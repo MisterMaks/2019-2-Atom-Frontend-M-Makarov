@@ -14,4 +14,21 @@
 
 export default function convertBytesToHuman(bytes) {
   // your solution goes here
+  var types = ["B", "KB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  var b = 0;
+  if (Number.isFinite(bytes) == false || bytes < 0) {
+    return false;
+  }
+  i = 0;
+  do {
+    if (bytes >= b) {
+      if (b == 0) {
+        b = 1;
+      }
+      b *= Math.pow(2, 10);
+      i += 1;
+    }
+  } while (bytes >= b);
+  bytes = String(+(bytes / b).toFixed(2)) + types[i];
+  return bytes;
 }
