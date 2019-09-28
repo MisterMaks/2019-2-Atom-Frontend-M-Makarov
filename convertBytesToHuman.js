@@ -20,15 +20,14 @@ export default function convertBytesToHuman(bytes) {
     return false;
   }
   var i = 0;
-  do {
-    if (bytes >= b) {
-      if (b == 0) {
-        b = 1;
-      }
-      b *= Math.pow(2, 10);
-      i += 1;
+  while (bytes >= b) {
+    if (b == 0) {
+      b = 1;
     }
-  } while (bytes >= b);
+    b *= 1024;
+    i += 1;
+  } 
+  b /= 1024;
   bytes = String(+(bytes / b).toFixed(2)) + " " + types[i-1];
   return bytes;
 }
