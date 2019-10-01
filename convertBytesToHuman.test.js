@@ -47,7 +47,7 @@ test('Возвращает корректное значение для чисе
 
 // другая группа проверок
 
-test('Возвращает false для неправильного отрицательных чисел', () => {
+test('Возвращает false для отрицательных чисел', () => {
   expect(convertBytesToHuman(-1)).toBe(false)
   expect(convertBytesToHuman(-100)).toBe(false)
   expect(convertBytesToHuman(-10000)).toBe(false)
