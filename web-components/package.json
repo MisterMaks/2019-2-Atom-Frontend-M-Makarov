@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "eslint ./src/",
+    "test": "./node_modules/.bin/eslint ./src/",
     "start": "webpack-dev-server --mode=development --hot",
     "build": "webpack --mode=development"
   },
