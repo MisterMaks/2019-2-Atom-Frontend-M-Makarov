@@ -75,7 +75,7 @@ class MessageForm extends HTMLElement {
         switch (name) {
             case 'messageid':
                 // console.log("messageid изменился")
-                this.$wrap.attr('messageid', newValue);
+                // this.$wrap.attr('messageid', newValue);
                 break;
 
             case 'owner':

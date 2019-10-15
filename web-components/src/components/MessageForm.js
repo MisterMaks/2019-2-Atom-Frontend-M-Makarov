@@ -1,3 +1,4 @@
+/* eslint-disable use-isnan */
 /* eslint-disable eqeqeq */
 /* eslint-disable vars-on-top */
 /* eslint-disable no-var */
@@ -106,9 +107,12 @@ class MessageForm extends HTMLElement {
 
     _messageLoader() {
         let currentID = parseInt(localStorage.getItem(this.dialogID + '_curentID'));
-        // console.log(currentID)
-        let i = currentID - 100;
-        if (i < 0) i = 0;
+        // console.log(currentID);
+        if (currentID == NaN) {
+            currentID = 0;
+        }
+        let i = 0;
+        // if (i < 0) i = 0;
         do {
             let messageBox = JSON.parse(localStorage.getItem('msg_' + this.dialogID + '_' + i));
             if (messageBox != null) this._renderMessage(messageBox);
