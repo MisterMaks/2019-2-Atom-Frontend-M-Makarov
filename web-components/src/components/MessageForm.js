@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable max-len */
 /* eslint-disable use-isnan */
 /* eslint-disable eqeqeq */
 /* eslint-disable vars-on-top */
@@ -106,17 +108,26 @@ class MessageForm extends HTMLElement {
     }
 
     _messageLoader() {
-        let currentID = parseInt(localStorage.getItem(this.dialogID + '_curentID'));
+        // let currentID = parseInt(localStorage.getItem(this.dialogID + '_curentID'));
         // console.log(currentID);
-        if (currentID == NaN) {
+        let currentID = localStorage.getItem('dialog_0');
+        if (currentID == undefined) {
             currentID = 0;
+        } else {
+            // let i = 0;
+            // if (i < 0) i = 0;
+            /* do {
+                // let messageBox = JSON.parse(localStorage.getItem('msg_' + this.dialogID + '_' + i));
+                messageBox = JSON.parse(localStorage.getItem('dialog_0'));
+                if (messageBox != null) this._renderMessage(messageBox);
+            } while (++i && i <= currentID); */
+            var messageBox = JSON.parse(localStorage.getItem('dialog_0'));
+            for (var i = 0; i < currentID.length; i++) {
+                if (messageBox[i] != undefined) {
+                    this._renderMessage(messageBox[i]);
+                }
+            }
         }
-        let i = 0;
-        // if (i < 0) i = 0;
-        do {
-            let messageBox = JSON.parse(localStorage.getItem('msg_' + this.dialogID + '_' + i));
-            if (messageBox != null) this._renderMessage(messageBox);
-        } while (++i && i <= currentID);
     }
 
     _renderMessage(messageBox) {
@@ -141,9 +152,16 @@ class MessageForm extends HTMLElement {
     }
 
     _newMessage(owner, text, additions = null) {
-        let currentID = parseInt(localStorage.getItem(this.dialogID + '_curentID')) + 1;
-        if (isNaN(currentID)) currentID = 0;
-        localStorage.setItem(this.dialogID + '_curentID', currentID);
+        // let currentID = parseInt(localStorage.getItem(this.dialogID + '_curentID')) + 1;
+
+        var currentID = 0;
+        if (localStorage.getItem('dialog_0') != undefined) {
+            currentID = localStorage.getItem('dialog_0').length;
+            // console.log(localStorage.getItem('dialog_0'));
+        }
+
+        // if (isNaN(currentID)) currentID = 0;
+        // localStorage.setItem(this.dialogID + '_curentID', currentID);
 
         let time = new Date();
         var messageBox = {
@@ -154,7 +172,13 @@ class MessageForm extends HTMLElement {
             time: time.getTime(),
         };
 
-        localStorage.setItem('msg_' + this.dialogID + '_' + currentID, JSON.stringify(messageBox));
+        var messages = [];
+        if (localStorage.getItem('dialog_0') != undefined) {
+            messages = JSON.parse(localStorage.getItem('dialog_0'));
+        }
+        messages.push(messageBox);
+        localStorage.setItem('dialog_0', JSON.stringify(messages));
+        // console.log(localStorage.length);
         this._renderMessage(messageBox);
     }
 
