@@ -10,7 +10,7 @@ const template = document.createElement('template');
 template.innerHTML = `
     <style>
 
-       /* *{
+       *{
             margin: 0;
             padding: 0;
             --fontNormalSize: 1.1em;
@@ -36,7 +36,8 @@ template.innerHTML = `
             display: flex;
             flex-direction: column;
             outline: 1px solid green;
-        } */
+            align-content: flex-end;
+        } 
 
         .dialogContent{
             margin-top: 40px;
@@ -100,9 +101,14 @@ template.innerHTML = `
         }
 
         .newButton_place{
-            position: absolute;
-            left: 1500px;
-            top: 800px;
+            width: 100%; 
+            /* outline: 1px solid orange; */
+            background-color: #FFF;
+            z-index: 1;
+            height: 50px;
+            width: 50px;
+            border-radius: 50px;
+            background-color: orange;
         }
 
         .newButton{
