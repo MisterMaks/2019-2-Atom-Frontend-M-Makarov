@@ -101,7 +101,7 @@ template.innerHTML = `
 
         .newButton_place{
             position: absolute;
-            left: 900px;
+            left: 1500px;
             top: 800px;
         }
 
