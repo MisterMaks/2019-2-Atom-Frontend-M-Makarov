@@ -68,7 +68,7 @@ class MessageForm extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['messageid', 'owner', 'text', 'time'];
+        return ['messageid', 'owner', 'text', 'time', 'read'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -90,6 +90,9 @@ class MessageForm extends HTMLElement {
                 let time = new Date(parseInt(newValue));
                 time = time.toString().split(' ')[4].split(':');
                 this.$time.innerText = time[0] + ':' + time[1];
+                break;
+
+            case 'read':
                 break;
         }
     }
