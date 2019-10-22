@@ -1,9 +1,3 @@
-/* eslint-disable radix */
-/* eslint-disable prefer-template */
-/* eslint-disable no-case-declarations */
-/* eslint-disable indent */
-/* eslint-disable default-case */
-/* eslint-disable no-underscore-dangle */
 const template = document.createElement('template');
 template.innerHTML = `
     <style>
@@ -99,12 +93,12 @@ class DialogForm extends HTMLElement {
     constructor() {
         super();
 
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot = this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.$wrap = this._shadowRoot.querySelector('.dialogBox');
-        this.$text = this._shadowRoot.querySelector('.text');
-        this.$time = this._shadowRoot.querySelector('.time');
+        this.$wrap = this.shadowRoot.querySelector('.dialogBox');
+        this.$text = this.shadowRoot.querySelector('.text');
+        this.$time = this.shadowRoot.querySelector('.time');
 
         this.$wrap.addEventListener('click', this.wrap.bind(this));
     }
@@ -114,29 +108,34 @@ class DialogForm extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+        let time = new Date(parseInt(newValue, 10));
         switch (name) {
-            case 'dialogid':
-                // console.log("messageid изменился")
-                // this.$wrap.attr('messageid', newValue);
-                break;
+        case 'dialogid':
+            // console.log("messageid изменился")
+            // this.$wrap.attr('messageid', newValue);
+            break;
 
-            case 'owner':
-                this.$wrap.classList.add(newValue);
-                break;
+        case 'owner':
+            this.$wrap.classList.add(newValue);
+            break;
 
-            case 'text':
-                if (newValue.length > 20) {
-                    this.$text.innerText = newValue.slice(0, 20) + '...';
-                } else {
-                    this.$text.innerText = newValue;
-                }
-                break;
+        case 'text':
+            if (newValue.length > 20) {
+                this.$text.innerText = `${newValue.slice(0, 20)}...`;
+            } else {
+                this.$text.innerText = newValue;
+            }
+            break;
 
-            case 'time':
-                let time = new Date(parseInt(newValue));
-                time = time.toString().split(' ')[4].split(':');
-                this.$time.innerText = time[0] + ':' + time[1];
-                break;
+        case 'time':
+            // let time = new Date(parseInt(newValue, 10));
+            time = time.toString().split(' ')[4].split(':');
+            this.$time.innerText = `${time[0]}:${time[1]}`;
+            break;
+
+        default:
+            /* code */
+            break;
         }
     }
 

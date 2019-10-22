@@ -1,9 +1,3 @@
-/* eslint-disable radix */
-/* eslint-disable prefer-template */
-/* eslint-disable no-case-declarations */
-/* eslint-disable indent */
-/* eslint-disable default-case */
-/* eslint-disable no-underscore-dangle */
 const template = document.createElement('template');
 template.innerHTML = `
     <style>
@@ -59,12 +53,12 @@ class MessageForm extends HTMLElement {
     constructor() {
         super();
 
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot = this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.$wrap = this._shadowRoot.querySelector('.messageBox');
-        this.$text = this._shadowRoot.querySelector('.text');
-        this.$time = this._shadowRoot.querySelector('.time');
+        this.$wrap = this.shadowRoot.querySelector('.messageBox');
+        this.$text = this.shadowRoot.querySelector('.text');
+        this.$time = this.shadowRoot.querySelector('.time');
     }
 
     static get observedAttributes() {

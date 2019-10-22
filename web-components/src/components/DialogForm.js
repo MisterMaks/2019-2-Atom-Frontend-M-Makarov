@@ -1,10 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable quotes */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-var */
-/* eslint-disable vars-on-top */
-/* eslint-disable prefer-const */
-/* eslint-disable no-restricted-syntax */
 const template = document.createElement('template');
 
 template.innerHTML = `
@@ -142,38 +135,41 @@ class DialogForm extends HTMLElement {
     constructor() {
         super();
         this.template = 0;
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot = this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.$dialogs = this._shadowRoot.querySelector('.dialogWrap');
-        this.$messageForm = this._shadowRoot.querySelector('message-form');
-        this.$messageContent = this._shadowRoot.querySelector('.messageContent');
-        this.$dialogContent = this._shadowRoot.querySelector('.dialogContent');
-        this.$newButton = this._shadowRoot.querySelector('.newButton_place');
+        this.$dialogs = this.shadowRoot.querySelector('.dialogWrap');
+        this.$messageForm = this.shadowRoot.querySelector('message-form');
+        this.$messageContent = this.shadowRoot.querySelector('.messageContent');
+        this.$dialogContent = this.shadowRoot.querySelector('.dialogContent');
+        this.$newButton = this.shadowRoot.querySelector('.newButton_place');
 
         this.dialogsLoader();
 
         // this.$dialog = this._shadowRoot.querySelector('dialog-box');
 
-        if (localStorage.getItem("dialog_0") == null) {
+        if (localStorage.getItem('dialog_0') == null) {
             this.$newButton.addEventListener('click', this.newDialog.bind(this));
+        } else {
+            this.$dialog = this.shadowRoot.querySelector('dialog-box');
+            this.$dialog.addEventListener('click', this.showDialog.bind(this));
         }
-        this.$dialogContent.addEventListener("click", this.showDialog.bind(this));
+        // this.$dialogContent.addEventListener("click", this.showDialog.bind(this));
         // this.$dialog.addEventListener("showDialog", this.showDialog.bind(this));
-        this.$messageForm.addEventListener("backButtonFromDialog", this.backButtonFromDialog.bind(this));
+        this.$messageForm.addEventListener('backButtonFromDialog', this.backButtonFromDialog.bind(this));
 
         this.$newButton.addEventListener('click', this.newDialog.bind(this));
     }
 
     dialogsLoader() {
-        let dialogIDs = Object.keys(localStorage);
-        for (let dialogID of dialogIDs) {
-            if (localStorage.getItem(dialogID) == "[]") {
+        const dialogIDs = Object.keys(localStorage);
+        for (const dialogID of dialogIDs) {
+            if (localStorage.getItem(dialogID) == '[]') {
                 localStorage.removeItem(dialogID);
                 this.$newButton.addEventListener('click', this.newDialog.bind(this));
             }
-            if (localStorage.getItem(dialogID) != "INFO") {
-                var dialogBox = JSON.parse(localStorage.getItem(dialogID)).splice(-1);
+            if (localStorage.getItem(dialogID) != 'INFO') {
+                const dialogBox = JSON.parse(localStorage.getItem(dialogID)).splice(-1);
                 this.renderLastMessage(dialogBox[0]);
             }
         }
@@ -191,21 +187,24 @@ class DialogForm extends HTMLElement {
     }
 
     showDialog() {
-        this.$messageContent.setAttribute("style", "height: 100%");
+        this.$messageContent.setAttribute('style', 'height: 100%');
         // this.$messageForm.setAttribute("style", "z-index: 10");
-        this.$newButton.setAttribute("style", "display: None");
-        this.$dialogContent.setAttribute("style", "display: None");
+        this.$newButton.setAttribute('style', 'display: None');
+        this.$dialogContent.setAttribute('style', 'display: None');
     }
 
     backButtonFromDialog() {
-        this.$messageContent.setAttribute("style", "display: None");
-        this.$newButton.setAttribute("style", "display:");
-        this.$dialogContent.setAttribute("style", "display:");
+        this.$messageContent.setAttribute('style', 'display: None');
+        this.$newButton.setAttribute('style', 'display:');
+        this.$dialogContent.setAttribute('style', 'display:');
 
-        let dialogIDs = Object.keys(localStorage);
-        for (let dialogID of dialogIDs) {
-            if (localStorage.getItem(dialogID) != "INFO") {
-                var dialogBox = JSON.parse(localStorage.getItem(dialogID)).splice(-1);
+        const dialogIDs = Object.keys(localStorage);
+        for (const dialogID of dialogIDs) {
+            if (localStorage.getItem(dialogID) != 'INFO') {
+                const dialogBox = JSON.parse(localStorage.getItem(dialogID)).splice(-1);
+                if (localStorage.getItem('dialog_0') == '[]') {
+                    window.location.reload(true);
+                }
                 this.backButtonrenderLastMessage(dialogBox[0]);
             }
         }
@@ -215,21 +214,25 @@ class DialogForm extends HTMLElement {
         if (this.template == 0) {
             this.template = document.createElement('dialog-box');
             this.dialog = this.$dialogs.appendChild(this.template);
-            this.$dialogContent.addEventListener("showDialog", this.showDialog.bind(this));
+            this.$dialogContent.addEventListener('showDialog', this.showDialog.bind(this));
         }
         this.dialog.setAttribute('dialogid', dialogBox.messageid);
         this.dialog.setAttribute('owner', dialogBox.owner);
         this.dialog.setAttribute('text', dialogBox.message);
         this.dialog.setAttribute('time', dialogBox.time);
+
+        this.$dialog = this.shadowRoot.querySelector('dialog-box');
+        this.$dialog.addEventListener('click', this.showDialog.bind(this));
     }
 
     newDialog() {
         // console.log("Новый диалог");
-        if (localStorage.getItem("dialog_0") == null) {
+        if (localStorage.getItem('dialog_0') == null) {
             // this.$content.setAttribute("style", "margin-top: 0px");
-            localStorage.setItem("dialog_0", JSON.stringify([]));
-            this.$messageContent.setAttribute("style", "height: 100%");
-            this.$newButton.setAttribute("style", "display: None");
+            localStorage.setItem('dialog_0', JSON.stringify([]));
+            this.$messageContent.setAttribute('style', 'height: 100%');
+            this.$newButton.setAttribute('style', 'display: None');
+            this.$messageForm.addEventListener('backButtonFromDialog', this.backButtonFromDialog.bind(this));
         }
     }
 }
