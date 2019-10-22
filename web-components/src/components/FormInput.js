@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-underscore-dangle */
 const template = document.createElement('template');
 template.innerHTML = `
     <style>
@@ -36,15 +34,15 @@ class FormInput extends HTMLElement {
     constructor() {
         super();
 
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot = this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.$input = this.shadowRoot.querySelector('input');
-        this.$input.addEventListener('keypress', this._onKeyPress.bind(this));
+        this.$input.addEventListener('keypress', this.onKeyPress.bind(this));
     }
 
-    _onKeyPress(event) {
-        if (event.keyCode == 13) this.dispatchEvent(new Event('onSubmit'));
+    onKeyPress(event) {
+        if (event.keyCode === 13) this.dispatchEvent(new Event('onSubmit'));
     }
 
     static get observedAttributes() {
@@ -52,7 +50,7 @@ class FormInput extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name == 'value') this.$input.value = newValue;
+        if (name === 'value') this.$input.value = newValue;
         this.$input.setAttribute(name, newValue);
     }
 
