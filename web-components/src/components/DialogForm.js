@@ -59,6 +59,11 @@ template.innerHTML = `
             box-sizing: border-box;
             width: 100%;
             padding: 10px 20px 10px;
+            padding-bottom: 0px;
+        }
+
+        dialog-box:hover{
+            background: #CDCCCC;
         }
 
         .dialogs{
@@ -102,6 +107,8 @@ template.innerHTML = `
             width: 50px;
             border-radius: 50px;
             background-color: orange;
+            margin-left: 95%;
+            margin-bottom: 1%;
         }
 
         .newButton{
@@ -112,8 +119,42 @@ template.innerHTML = `
             width: 50px;
             border-radius: 50px;
             background-color: orange;
+            transition: transform 0.5s, background-color 0.5s; 
+            box-shadow: 0 0 0 orange;
+            animation: pulse 2s infinite;
         }
 
+        .newButton:hover{
+            transform: rotate(30deg);
+            background-color: red;
+            animation: None;
+        }
+        
+        @-webkit-keyframes pulse {
+            0% {
+              -webkit-box-shadow: 0 0 0 0 #ffd280;
+            }
+            70% {
+                -webkit-box-shadow: 0 0 0 10px #ffd280;
+            }
+            100% {
+                -webkit-box-shadow: 0 0 0 0 #ffd280;
+            }
+          }
+          @keyframes pulse {
+            0% {
+              -moz-box-shadow: 0 0 0 0 #ffd280;
+              box-shadow: 0 0 0 0 #ffd280;
+            }
+            70% {
+                -moz-box-shadow: 0 0 0 10px #ffd280;
+                box-shadow: 0 0 0 10px #ffd280;
+            }
+            100% {
+                -moz-box-shadow: 0 0 0 0 #ffd280;
+                box-shadow: 0 0 0 0 #ffd280;
+            }
+          }
     </style>
     <div class="dialogs">
         <div class="burger"></div>

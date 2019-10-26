@@ -25,7 +25,17 @@ template.innerHTML = `
             text-align: justify;
             max-width: 60%;
             word-break: break-all;
+            /* animation: appearance .5s; */
         }
+
+        /* @keyframes appearance {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
+        } */
 
         .messageBox .time{
             width: 100%;

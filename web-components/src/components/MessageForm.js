@@ -58,6 +58,16 @@ template.innerHTML = `
             box-sizing: border-box;
             width: 100%;
             padding: 10px 20px 10px;
+            animation: appearance .5s;
+        }
+
+        @keyframes appearance {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
         }
 
         .footer{
