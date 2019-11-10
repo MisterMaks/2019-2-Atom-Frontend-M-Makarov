@@ -53,5 +53,8 @@ module.exports = {
 		'no-eol-whitespace': null,
 		'no-duplicate-selectors': null,
 		'block-opening-brace-space-before': null,
+		indentation: null,
+		'declaration-colon-newline-after': null,
+		'value-list-comma-newline-after': null,
 	},
 };
