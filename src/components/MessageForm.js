@@ -1,5 +1,5 @@
 import './styles/MessageForm.css';
-import React, { Component } from 'react';
+import React from 'react';
 
 import { MessageBox } from './MessageBox';
 import { FormInput } from './FormInput';

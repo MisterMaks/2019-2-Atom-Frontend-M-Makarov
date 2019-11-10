@@ -21,7 +21,7 @@ export class DialogForm extends Component {
 		var lastMessage = '';
 		var text = '';
 		var time = '';
-		if (localStorage.getItem('dialog_0') != undefined) {
+		if (localStorage.getItem('dialog_0') !== undefined) {
 			lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(-1)[0];
 			text = lastMessage.text;
 			if (text.length >= 50) {
@@ -41,7 +41,7 @@ export class DialogForm extends Component {
 	}
 
 	createDialog() {
-		if (localStorage.getItem('dialog_0') == undefined) {
+		if (localStorage.getItem('dialog_0') === undefined) {
 			console.log('Создать диалог');
 			var styleDialogBoxEl = { display: '' };
 			this.setState({ styleDialogBox: styleDialogBoxEl });
@@ -61,7 +61,7 @@ export class DialogForm extends Component {
 		var styleMessageEl = { display: 'None' };
 		this.setState({ styleDialog: styleDialogEl, styleMessage: styleMessageEl });
 
-		if (localStorage.getItem('dialog_0') != undefined) {
+		if (localStorage.getItem('dialog_0') !== undefined) {
 			var lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(
 				-1,
 			)[0];
@@ -92,7 +92,7 @@ export class DialogForm extends Component {
 			time: time,
 		};
 		messages.push(messageBox);
-		if (localStorage.getItem('dialog_0') == undefined) {
+		if (localStorage.getItem('dialog_0') === undefined) {
 			localStorage.setItem('dialog_0', JSON.stringify(messages));
 		} else {
 			messages = JSON.parse(localStorage.getItem('dialog_0'));
