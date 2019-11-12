@@ -1,0 +1,37 @@
+.messageBox {
+	/* outline: 1px solid red; */
+
+	/* margin-top: 40px; */
+	color: white;
+	background-color: #4a76a8;
+	border-radius: 15px;
+	padding: 10px;
+	text-align: justify;
+	max-width: 60%;
+	word-break: break-all;
+
+	/* animation: appearance .5s; */
+}
+
+.messageBox .time {
+	width: 100%;
+	text-align: right;
+	font-size: var(--fontMinSize);
+	margin-top: 5px;
+	color: red;
+}
+
+.self {
+	float: right;
+}
+
+.self:after {
+	clear: both;
+}
+
+.messageBox_place {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 20px 10px;
+	animation: appearance 0.5s;
+}
