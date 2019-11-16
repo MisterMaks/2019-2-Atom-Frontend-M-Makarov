@@ -140,7 +140,7 @@ export class Messenger extends Component {
 			<Router>
 				<React.Fragment>
 					<Switch>
-						<Route path="//">
+						<Route path="/">
 							<DialogForm
 								/* styleDialogForm={this.state.styleDialog} */
 								/* 
