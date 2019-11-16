@@ -1,6 +1,8 @@
 import './styles/MessageForm.css';
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { MessageBox } from './MessageBox';
 import { FormInput } from './FormInput';
 
@@ -10,7 +12,11 @@ export function MessageForm(props) {
 	return (
 		<div className="messageForm_place">
 			<div className="header">
-				<div className="backButton" onClick={props.onClick} />
+				<div>
+					<Link to="/">
+						<div className="backButton" onClick={props.onClick} />
+					</Link>
+				</div>
 				<div className="name_with_photo">
 					<div className="avatar_message_place">
 						<div className="avatar_message" />
