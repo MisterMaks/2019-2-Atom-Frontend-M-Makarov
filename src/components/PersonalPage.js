@@ -36,7 +36,9 @@ export function PersonalPage(props) {
 			<div className="bio_place">
 				<div className="bio_topic">Bio</div>
 				<div className="bio_with_button" id="with_button">
-					<div className="bio">Subtitle 1</div>
+					<div className="bio">
+						Студент курса Mail.ru Group Техноатом FullStack
+					</div>
 					<div className="changeButton" />
 				</div>
 				<div className="bio_comment">Any details about you</div>
