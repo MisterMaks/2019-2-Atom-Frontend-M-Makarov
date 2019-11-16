@@ -140,7 +140,7 @@ export class Messenger extends Component {
 			<Router>
 				<React.Fragment>
 					<Switch>
-						<Route path="/">
+						<Route path="/2019-2-Atom-Frontend-M-Makarov">
 							<DialogForm
 								/* styleDialogForm={this.state.styleDialog} */
 								/* 

@@ -13,7 +13,7 @@ export function MessageForm(props) {
 		<div className="messageForm_place">
 			<div className="header">
 				<div>
-					<Link to="/">
+					<Link to="/2019-2-Atom-Frontend-M-Makarov">
 						<div className="backButton" onClick={props.onClick} />
 					</Link>
 				</div>
