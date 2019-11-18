@@ -1,3 +1,4 @@
+export * from './Messenger';
 export * from './DialogForm';
 export * from './DialogBox';
 export * from './MessageForm';
