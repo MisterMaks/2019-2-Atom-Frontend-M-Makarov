@@ -154,6 +154,7 @@ export class Messenger extends Component {
 					this.state.files.pop();
 					this.setState({ mediaRecorder: null });
 					stream.getTracks().forEach((track) => track.stop());
+					this.setState({ isAudioMessage: false });
 				});
 
 				this.state.mediaRecorder.addEventListener('dataavailable', (event) => {
