@@ -49,7 +49,7 @@ export function MessageBox(props) {
 					>
 						{href}
 					</a>
-					<img src={srcImage} width="100%" />
+					<img src={srcImage} alt={srcImage} width="100%" />
 					<audio
 						className="audioMessage"
 						controls
