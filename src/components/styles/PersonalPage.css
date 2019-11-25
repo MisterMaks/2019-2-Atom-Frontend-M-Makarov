@@ -18,6 +18,8 @@
 	background-color: #75b5ff;
 	font-size: 20pt;
 	font-family: 'Times New Roman';
+	position: fixed;
+	width: 100%;
 }
 
 .backButton {
@@ -40,7 +42,7 @@
 .avatar_profile_place {
 	display: flex;
 	justify-content: center;
-	margin-top: 30px;
+	margin-top: 50px;
 }
 
 .avatar_profile {

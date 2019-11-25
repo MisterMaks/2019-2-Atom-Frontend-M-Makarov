@@ -10,23 +10,22 @@ export class Messenger extends Component {
 	constructor(props) {
 		super(props);
 
-		/* this.inPersonalPage = this.inPersonalPage.bind(this); */
-		/* this.createDialog = this.createDialog.bind(this); */
-		/* this.inMessageForm = this.inMessageForm.bind(this); */
 		this.inDialogForm = this.inDialogForm.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
 		this.changeStateValue = this.changeStateValue.bind(this);
-
-		/* 
-		var styleDialogEl = {display: ""};
-		var styleMessageEl = {display: "None"};
-		var styleDialogBoxEl = {display: "None"};
-		var stylePersonalPageEl = {display: "None"};
-		*/
+		this.getGeolocation = this.getGeolocation.bind(this);
+		this.handleFiles = this.handleFiles.bind(this);
+		this.handleDragNDropFiles = this.handleDragNDropFiles.bind(this);
+		this.handleAudioMessage = this.handleAudioMessage.bind(this);
+		this.handleAudioButtonClick = this.handleAudioButtonClick.bind(this);
 
 		var lastMessage = '';
 		var text = '';
 		var time = '';
+		var fileList = [];
+		var messages = [];
+		var newMessages = [];
+
 		if (localStorage.getItem('dialog_0') !== null) {
 			lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(-1)[0];
 			text = lastMessage.text;
@@ -34,58 +33,155 @@ export class Messenger extends Component {
 				text = lastMessage.text.slice(0, 50) + '...';
 				time = lastMessage.time;
 			}
-			/* styleDialogBoxEl = {display: ""}; */
+
+			messages = JSON.parse(localStorage.getItem('dialog_0'));
+			for (var i = 0; i < messages.length; i = 1 + i) {
+				var message = messages[i];
+				if (message.text.slice(0, 9) !== 'blob:http') {
+					newMessages.push(message);
+				}
+			}
+			localStorage.setItem('dialog_0', JSON.stringify(newMessages));
 		}
 		this.state = {
-			/* 
-			styleDialog: styleDialogEl, 
-			styleMessage: styleMessageEl, 
-			styleDialogBox: styleDialogBoxEl,
-			*/
 			value: '',
 			textLastMessage: text,
 			timeLastMessage: time,
-			/* stylePersonalPage: stylePersonalPageEl, */
+			files: fileList,
+			isAudioMessage: false,
+			recordAudioMessage: [false],
+			mediaRecorder: null,
 		};
 	}
 
-	/* 
-	inPersonalPage() {
-		console.log("На страницу пользователя")
-		var styleDialogEl = {display: "None"};
-		var stylePersonalPageEl = {display: ""};
-		this.setState({styleDialog: styleDialogEl, stylePersonalPage: stylePersonalPageEl});
-	} 
-	*/
+	getGeolocation(event) {
+		navigator.geolocation.getCurrentPosition((position) => {
+			var currentPositionLatitude = position.coords.latitude;
+			var currentPositionLongitude = position.coords.longitude;
+			var geoUrl =
+				'https://www.openstreetmap.org/#map=18/' +
+				currentPositionLatitude +
+				'/' +
+				currentPositionLongitude +
+				'/';
+			this.setState({ value: geoUrl });
+			this.sendMessage();
+		});
+	}
 
-	/*
-	createDialog() {
-		if (localStorage.getItem('dialog_0') === null) {
-			console.log("Создать диалог");
-			var styleDialogBoxEl = {display: ""};
-			this.setState({styleDialogBox: styleDialogBoxEl});
+	handleFiles(event) {
+		if (event.target.files.length > 0) {
+			console.log(event.target.files.length);
+			for (var i = 0; i < event.target.files.length; i = 1 + i) {
+				var file = event.target.files[i];
+				const data = new FormData();
+				data.append('image', file);
+				fetch('https://tt-front.now.sh/upload', {
+					method: 'POST',
+					body: data,
+				})
+					.then(() => {
+						alert('Вложение отправлено');
+					})
+					.catch(console.log);
+				var link = window.URL.createObjectURL(file);
+				this.state.files.push(link);
+				console.log(this.state);
+				this.sendMessage();
+				this.state.files.pop();
+			}
 		}
 	}
-	*/
 
-	/*
-	inMessageForm() {
-		console.log("В чат");
-		var styleDialogEl = {display: "None"};
-		var styleMessageEl = {display: ""};
-		this.setState({styleDialog: styleDialogEl, styleMessage: styleMessageEl});
+	handleDragNDropFiles(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		var dt = event.dataTransfer;
+		var files = dt.files;
+		if (files.length > 0) {
+			console.log(files.length);
+			for (var i = 0; i < files.length; i = 1 + i) {
+				var file = files[i];
+				const data = new FormData();
+				data.append('image', file);
+				fetch('https://tt-front.now.sh/upload', {
+					method: 'POST',
+					body: data,
+				})
+					.then(() => {
+						alert('Вложение отправлено');
+					})
+					.catch(console.log);
+				var link = window.URL.createObjectURL(file);
+				this.state.files.push(link);
+				console.log(this.state);
+				this.sendMessage();
+				this.state.files.pop();
+			}
+		}
 	}
-	*/
+
+	handleAudioMessage(event) {
+		if (this.state.recordAudioMessage[0] === true) {
+			let chuncks = [];
+			const constrains = { audio: true };
+
+			navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
+				this.setState({ mediaRecorder: new MediaRecorder(stream) });
+
+				this.state.mediaRecorder.addEventListener('stop', (event) => {
+					const blob = new Blob(chuncks, {
+						type: this.state.mediaRecorder.mimeType,
+					});
+
+					const data = new FormData();
+					data.append('image', blob);
+					fetch('https://tt-front.now.sh/upload', {
+						method: 'POST',
+						body: data,
+					})
+						.then(() => {
+							alert('Вложение отправлено');
+						})
+						.catch(console.log);
+
+					chuncks = [];
+					const audioURL = URL.createObjectURL(blob);
+					this.setState({ isAudioMessage: true });
+					this.state.files.push(audioURL);
+					console.log(this.state);
+					this.sendMessage();
+					this.state.files.pop();
+					this.setState({ mediaRecorder: null });
+					stream.getTracks().forEach((track) => track.stop());
+				});
+
+				this.state.mediaRecorder.addEventListener('dataavailable', (event) => {
+					chuncks.push(event.data);
+				});
+
+				if (this.state.mediaRecorder !== null) {
+					this.state.mediaRecorder.start();
+				}
+			});
+		}
+	}
+
+	handleAudioButtonClick(event) {
+		if (this.state.recordAudioMessage[0] === false) {
+			this.state.recordAudioMessage.pop();
+			this.state.recordAudioMessage.push(true);
+			this.handleAudioMessage(event);
+		} else {
+			if (this.state.mediaRecorder !== null) {
+				this.state.mediaRecorder.stop();
+			}
+			this.state.recordAudioMessage.pop();
+			this.state.recordAudioMessage.push(false);
+		}
+	}
 
 	inDialogForm() {
-		/* 
-		console.log("К списку чатов");
-		var styleDialogEl = {display: ""};
-		var styleMessageEl = {display: "None"};
-		var stylePersonalPageEl = {display: "None"};
-		this.setState({styleDialog: styleDialogEl, styleMessage: styleMessageEl, stylePersonalPage: stylePersonalPageEl});
-		*/
-
 		if (localStorage.getItem('dialog_0') !== null) {
 			var lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(
 				-1,
@@ -95,18 +191,21 @@ export class Messenger extends Component {
 			if (lastMessage.text.length >= 50) {
 				text = lastMessage.text.slice(0, 50) + '...';
 			}
-			this.setState({
-				textLastMessage: text,
-				timeLastMessage: lastMessage.time,
-			});
+			if (text.slice(0, 9) !== 'blob:http') {
+				this.setState({
+					textLastMessage: text,
+					timeLastMessage: lastMessage.time,
+				});
+			}
 		}
 	}
 
 	sendMessage(event) {
 		console.log('Отправить сообщение');
-		console.log(this.state.value);
+		console.log(this.state);
 		console.log(new Date().toLocaleTimeString().slice(0, 5));
 
+		var newId = 0;
 		var messages = [];
 		var text = this.state.value;
 		var time = new Date().toLocaleTimeString().slice(0, 5);
@@ -115,20 +214,43 @@ export class Messenger extends Component {
 			sender: 'Maks',
 			text: text,
 			time: time,
+			isAudioMessage: this.state.isAudioMessage,
 		};
-		messages.push(messageBox);
-		if (localStorage.getItem('dialog_0') === null) {
-			localStorage.setItem('dialog_0', JSON.stringify(messages));
-		} else {
-			messages = JSON.parse(localStorage.getItem('dialog_0'));
-			var newId = messages.slice(-1)[0].id + 1;
-			messageBox.id = newId;
+		if (text.trim().length > 0) {
+			console.log('Отправить текст');
 			messages.push(messageBox);
-			localStorage.setItem('dialog_0', JSON.stringify(messages));
+			if (localStorage.getItem('dialog_0') === null) {
+				localStorage.setItem('dialog_0', JSON.stringify(messages));
+			} else {
+				messages = JSON.parse(localStorage.getItem('dialog_0'));
+				newId = messages.slice(-1)[0].id + 1;
+				messageBox.id = newId;
+				messages.push(messageBox);
+				localStorage.setItem('dialog_0', JSON.stringify(messages));
+			}
+			this.inDialogForm();
+		} else if (this.state.files.length > 0) {
+			console.log('Отправить медиа');
+			for (var i = 0; i < this.state.files.length; i = 1 + i) {
+				var fileLink = this.state.files[i];
+				messageBox.text = fileLink;
+				messages.push(messageBox);
+				if (localStorage.getItem('dialog_0') === null) {
+					localStorage.setItem('dialog_0', JSON.stringify(messages));
+				} else {
+					messages = JSON.parse(localStorage.getItem('dialog_0'));
+					newId = messages.slice(-1)[0].id + 1;
+					messageBox.id = newId;
+					messages.push(messageBox);
+					localStorage.setItem('dialog_0', JSON.stringify(messages));
+				}
+			}
 		}
-
-		this.setState({ value: '' });
-		event.preventDefault();
+		text = '';
+		this.setState({ value: '', files: [] });
+		if (event) {
+			event.preventDefault();
+		}
 	}
 
 	changeStateValue(event) {
@@ -142,15 +264,8 @@ export class Messenger extends Component {
 					<Switch>
 						<Route path="/2019-2-Atom-Frontend-M-Makarov">
 							<DialogForm
-								/* styleDialogForm={this.state.styleDialog} */
-								/* 
-								inPersonalPage={ this.inPersonalPage }
-								inMessageForm={ this.inMessageForm } 
-								*/
-								/* createDialog={ this.createDialog } */
 								lastMessagesTexts={this.state.textLastMessage}
 								lastMessagesTimes={this.state.timeLastMessage}
-								/* styleDialogBox={this.state.styleDialogBox} */
 							/>
 						</Route>
 						<Route path="/chatpage">
@@ -161,9 +276,13 @@ export class Messenger extends Component {
 								onChange={this.changeStateValue}
 								messageList={
 									JSON.parse(localStorage.getItem('dialog_0')) || [
-										{ id: '', text: null, time: null },
+										{ id: '', text: null, time: null, isAudioMessage: null },
 									]
 								}
+								geolocation={this.getGeolocation}
+								filesOnChange={this.handleFiles}
+								dragNDropFiles={this.handleDragNDropFiles}
+								audioMessage={this.handleAudioButtonClick}
 							/>
 						</Route>
 						<Route path="/personalpage">

@@ -18,3 +18,53 @@ input {
 	height: 50px;
 	flex-direction: row;
 }
+
+.geolocationButton_place {
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+}
+
+.geolocationButton {
+	cursor: pointer;
+	background: url('https://webanvar.com/wp-content/uploads/2019/01/Address-icon.png')
+		no-repeat orange;
+	background-position: center;
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+}
+
+.pictureButton_place {
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+}
+
+.pictureButton {
+	cursor: pointer;
+	background: url('http://cdn.onlinewebfonts.com/svg/img_277376.png') no-repeat
+		orange;
+	background-position: center;
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+}
+
+.microphoneButton_place {
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+}
+
+.microphoneButton {
+	cursor: pointer;
+
+	/* 
+	background: url('https://webmii.com/images/mic.png') no-repeat orange; 
+	background-position: center;
+	background-size: 100%;
+	*/
+	height: 100%;
+	width: 39px;
+}
