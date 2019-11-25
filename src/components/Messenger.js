@@ -81,7 +81,7 @@ export class Messenger extends Component {
 					body: data,
 				})
 					.then(() => {
-						alert('Вложение отправлено');
+						alert('Картинка отправлена');
 					})
 					.catch(console.log);
 				var link = window.URL.createObjectURL(file);
@@ -109,7 +109,7 @@ export class Messenger extends Component {
 					body: data,
 				})
 					.then(() => {
-						alert('Вложение отправлено');
+						alert('Картинка отправлена');
 					})
 					.catch(console.log);
 				var link = window.URL.createObjectURL(file);
@@ -135,13 +135,13 @@ export class Messenger extends Component {
 					});
 
 					const data = new FormData();
-					data.append('image', blob);
+					data.append('audio', blob);
 					fetch('https://tt-front.now.sh/upload', {
 						method: 'POST',
 						body: data,
 					})
 						.then(() => {
-							alert('Вложение отправлено');
+							alert('Голосовое сообщение отправлено');
 						})
 						.catch(console.log);
 
