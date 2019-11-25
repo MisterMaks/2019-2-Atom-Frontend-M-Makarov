@@ -63,6 +63,7 @@
 		"object-shorthand": 1,
 		"react/jsx-fragments": 0,
 		"no-shadow": 1,
-		"jsx-a11y/media-has-caption": 1
+		"jsx-a11y/media-has-caption": 1,
+		"jsx-a11y/alt-text": 1
 	}
 }

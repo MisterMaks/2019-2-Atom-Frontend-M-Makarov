@@ -1,5 +1,5 @@
 import './styles/MessageBox.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 export function MessageBox(props) {
 	const show = { display: 'None' };
