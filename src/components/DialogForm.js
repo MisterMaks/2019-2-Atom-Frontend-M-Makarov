@@ -22,7 +22,10 @@ export function DialogForm(props) {
 					<DialogBox
 						text={props.lastMessagesTexts}
 						time={props.lastMessagesTimes}
+						nameDialogBox="Максим Макаров"
+						chatpage={props.chatpages[0]}
 					/>
+					<DialogBox chatpage={props.chatpages[1]} nameDialogBox="Общий чат" />
 				</div>
 			</div>
 			<div className="newButton_place">

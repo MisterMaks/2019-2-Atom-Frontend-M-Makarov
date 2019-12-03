@@ -43,6 +43,7 @@ export class Messenger extends Component {
 			}
 			localStorage.setItem('dialog_0', JSON.stringify(newMessages));
 		}
+
 		this.state = {
 			value: '',
 			textLastMessage: text,
@@ -201,7 +202,7 @@ export class Messenger extends Component {
 		}
 	}
 
-	sendMessage(event) {
+	sendMessage(event, key) {
 		console.log('Отправить сообщение');
 		console.log(this.state);
 		console.log(new Date().toLocaleTimeString().slice(0, 5));
@@ -226,8 +227,22 @@ export class Messenger extends Component {
 				messages = JSON.parse(localStorage.getItem('dialog_0'));
 				newId = messages.slice(-1)[0].id + 1;
 				messageBox.id = newId;
-				messages.push(messageBox);
-				localStorage.setItem('dialog_0', JSON.stringify(messages));
+				if (key === true) {
+					console.log('web');
+					const data = new FormData();
+					data.append('content', messageBox.text);
+					data.append('chat', 17);
+					fetch('https://127.0.0.1:8000/messages/send_message/', {
+						method: 'POST',
+						mode: 'no-cors',
+						body: data,
+						credentials: 'include',
+					});
+				} else {
+					console.log('не web');
+					messages.push(messageBox);
+					localStorage.setItem('dialog_0', JSON.stringify(messages));
+				}
 			}
 			this.inDialogForm();
 		} else if (this.state.files.length > 0) {
@@ -256,6 +271,7 @@ export class Messenger extends Component {
 
 	changeStateValue(event) {
 		this.setState({ value: event.target.value });
+		event.preventDefault();
 	}
 
 	render() {
@@ -267,23 +283,39 @@ export class Messenger extends Component {
 							<DialogForm
 								lastMessagesTexts={this.state.textLastMessage}
 								lastMessagesTimes={this.state.timeLastMessage}
+								chatpages={['/chatpage/1', '/chatpage/2']}
 							/>
 						</Route>
-						<Route path="/chatpage">
+						<Route path="/chatpage/1">
 							<MessageForm
 								onClick={this.inDialogForm}
-								onSubmit={this.sendMessage}
+								onSubmit={(event) => {
+									this.sendMessage(event, false);
+								}}
 								value={this.state.value}
 								onChange={this.changeStateValue}
-								messageList={
-									JSON.parse(localStorage.getItem('dialog_0')) || [
-										{ id: '', text: null, time: null, isAudioMessage: null },
-									]
-								}
 								geolocation={this.getGeolocation}
 								filesOnChange={this.handleFiles}
 								dragNDropFiles={this.handleDragNDropFiles}
 								audioMessage={this.handleAudioButtonClick}
+								nameDialogBox="Максим Макаров"
+								web={false}
+							/>
+						</Route>
+						<Route path="/chatpage/2">
+							<MessageForm
+								onClick={this.inDialogForm}
+								onSubmit={(event) => {
+									this.sendMessage(event, true);
+								}}
+								value={this.state.value}
+								onChange={this.changeStateValue}
+								geolocation={this.getGeolocation}
+								filesOnChange={this.handleFiles}
+								dragNDropFiles={this.handleDragNDropFiles}
+								audioMessage={this.handleAudioButtonClick}
+								nameDialogBox="Общий чат"
+								web={true}
 							/>
 						</Route>
 						<Route path="/personalpage">

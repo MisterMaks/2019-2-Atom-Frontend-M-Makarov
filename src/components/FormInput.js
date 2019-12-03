@@ -2,6 +2,8 @@ import './styles/FormInput.css';
 import React, { useState } from 'react';
 
 export function FormInput(props) {
+	// const [value, setValue] = useState('');
+
 	const input = React.useRef(null);
 	const [styleMicrophoneButton, changeStyleMicrophone] = useState({
 		background: "url('https://webmii.com/images/mic.png') no-repeat orange",
