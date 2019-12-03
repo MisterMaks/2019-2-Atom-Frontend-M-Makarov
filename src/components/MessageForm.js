@@ -9,6 +9,7 @@ import { FormInput } from './FormInput';
 export function MessageForm(props) {
 	// const [t, changeT] = useState(100);
 	const t = 100;
+	const { web } = props;
 	const [messages, setMessages] = useState([]);
 	const [style, changeStyle] = useState({
 		display: 'None',
@@ -54,7 +55,7 @@ export function MessageForm(props) {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (props.web) {
+			if (web) {
 				fetch('https://127.0.0.1:8000/chats/get_chat_page/17/', {
 					method: 'GET',
 					mode: 'cors',
@@ -84,8 +85,9 @@ export function MessageForm(props) {
 				];
 				setMessages(messageList);
 			}
+			console.log(interval);
 		}, t);
-	}, []);
+	}, [web]);
 
 	return (
 		<div
