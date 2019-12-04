@@ -54,7 +54,7 @@ export function MessageForm(props) {
 	};
 
 	useEffect(() => {
-		const interval = setInterval(() => {
+		setInterval(() => {
 			if (web) {
 				fetch('https://127.0.0.1:8000/chats/get_chat_page/17/', {
 					method: 'GET',
@@ -81,11 +81,16 @@ export function MessageForm(props) {
 					});
 			} else {
 				const messageList = JSON.parse(localStorage.getItem('dialog_0')) || [
-					{ id: '', text: null, time: null, isAudioMessage: null },
+					{
+						id: '',
+						text: null,
+						time: null,
+						isAudioMessage: null,
+						typeMessage: null,
+					},
 				];
 				setMessages(messageList);
 			}
-			console.log(interval);
 		}, t);
 	}, [web]);
 
@@ -122,6 +127,7 @@ export function MessageForm(props) {
 							text={message.text}
 							time={message.time}
 							isAudioMessage={message.isAudioMessage}
+							typeMessage={message.typeMessage}
 						/>
 					))}
 				</div>

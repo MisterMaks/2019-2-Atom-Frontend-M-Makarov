@@ -19,12 +19,12 @@ export class Messenger extends Component {
 		this.handleAudioMessage = this.handleAudioMessage.bind(this);
 		this.handleAudioButtonClick = this.handleAudioButtonClick.bind(this);
 
-		var lastMessage = '';
-		var text = '';
-		var time = '';
-		var fileList = [];
-		var messages = [];
-		var newMessages = [];
+		let lastMessage = '';
+		let text = '';
+		let time = '';
+		const fileList = [];
+		let messages = [];
+		const newMessages = [];
 
 		if (localStorage.getItem('dialog_0') !== null) {
 			lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(-1)[0];
@@ -35,13 +35,17 @@ export class Messenger extends Component {
 			}
 
 			messages = JSON.parse(localStorage.getItem('dialog_0'));
-			for (var i = 0; i < messages.length; i = 1 + i) {
-				var message = messages[i];
-				if (message.text.slice(0, 9) !== 'blob:http') {
+			for (let i = 0; i < messages.length; i = 1 + i) {
+				const message = messages[i];
+				if (message.typeMessage === 'text' || message.typeMessage === 'geo') {
 					newMessages.push(message);
 				}
 			}
-			localStorage.setItem('dialog_0', JSON.stringify(newMessages));
+			if (newMessages.length !== 0) {
+				localStorage.setItem('dialog_0', JSON.stringify(newMessages));
+			} else {
+				localStorage.clear();
+			}
 		}
 
 		this.state = {
@@ -52,29 +56,32 @@ export class Messenger extends Component {
 			isAudioMessage: false,
 			recordAudioMessage: [false],
 			mediaRecorder: null,
+			typeMessage: 'text',
 		};
 	}
 
 	getGeolocation(event) {
 		navigator.geolocation.getCurrentPosition((position) => {
-			var currentPositionLatitude = position.coords.latitude;
-			var currentPositionLongitude = position.coords.longitude;
-			var geoUrl =
+			const currentPositionLatitude = position.coords.latitude;
+			const currentPositionLongitude = position.coords.longitude;
+			const geoUrl =
 				'https://www.openstreetmap.org/#map=18/' +
 				currentPositionLatitude +
 				'/' +
 				currentPositionLongitude +
 				'/';
 			this.setState({ value: geoUrl });
-			this.sendMessage();
+			// debugger;
+			this.sendMessage(event, false, 'geo');
 		});
 	}
 
 	handleFiles(event) {
+		// this.setState({typeMessage: "image"});
 		if (event.target.files.length > 0) {
 			console.log(event.target.files.length);
-			for (var i = 0; i < event.target.files.length; i = 1 + i) {
-				var file = event.target.files[i];
+			for (let i = 0; i < event.target.files.length; i = 1 + i) {
+				const file = event.target.files[i];
 				const data = new FormData();
 				data.append('image', file);
 				fetch('https://tt-front.now.sh/upload', {
@@ -85,24 +92,26 @@ export class Messenger extends Component {
 						alert('Картинка отправлена');
 					})
 					.catch(console.log);
-				var link = window.URL.createObjectURL(file);
+				const link = window.URL.createObjectURL(file);
 				this.state.files.push(link);
 				console.log(this.state);
-				this.sendMessage();
+				// this.setState({typeMessage: "image"});
+				this.sendMessage(event, false, 'image');
 				this.state.files.pop();
 			}
 		}
 	}
 
 	handleDragNDropFiles(event) {
+		// this.setState({typeMessage: "image"});
 		event.stopPropagation();
 		event.preventDefault();
-		var dt = event.dataTransfer;
-		var files = dt.files;
+		const dt = event.dataTransfer;
+		const files = dt.files;
 		if (files.length > 0) {
 			console.log(files.length);
-			for (var i = 0; i < files.length; i = 1 + i) {
-				var file = files[i];
+			for (let i = 0; i < files.length; i = 1 + i) {
+				const file = files[i];
 				const data = new FormData();
 				data.append('image', file);
 				fetch('https://tt-front.now.sh/upload', {
@@ -113,10 +122,11 @@ export class Messenger extends Component {
 						alert('Картинка отправлена');
 					})
 					.catch(console.log);
-				var link = window.URL.createObjectURL(file);
+				const link = window.URL.createObjectURL(file);
 				this.state.files.push(link);
 				console.log(this.state);
-				this.sendMessage();
+				// this.setState({typeMessage: "image"});
+				this.sendMessage(event, false, 'image');
 				this.state.files.pop();
 			}
 		}
@@ -151,7 +161,8 @@ export class Messenger extends Component {
 					this.setState({ isAudioMessage: true });
 					this.state.files.push(audioURL);
 					console.log(this.state);
-					this.sendMessage();
+					// this.setState({typeMessage: "audio"});
+					this.sendMessage(event, false, 'audio');
 					this.state.files.pop();
 					this.setState({ mediaRecorder: null });
 					stream.getTracks().forEach((track) => track.stop());
@@ -185,11 +196,11 @@ export class Messenger extends Component {
 
 	inDialogForm() {
 		if (localStorage.getItem('dialog_0') !== null) {
-			var lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(
+			const lastMessage = JSON.parse(localStorage.getItem('dialog_0')).slice(
 				-1,
 			)[0];
 			console.log(lastMessage);
-			var text = lastMessage.text;
+			let text = lastMessage.text;
 			if (lastMessage.text.length >= 50) {
 				text = lastMessage.text.slice(0, 50) + '...';
 			}
@@ -202,21 +213,22 @@ export class Messenger extends Component {
 		}
 	}
 
-	sendMessage(event, key) {
+	sendMessage(event, key, typeMessage = null) {
 		console.log('Отправить сообщение');
 		console.log(this.state);
 		console.log(new Date().toLocaleTimeString().slice(0, 5));
 
-		var newId = 0;
-		var messages = [];
-		var text = this.state.value;
-		var time = new Date().toLocaleTimeString().slice(0, 5);
-		var messageBox = {
+		let newId = 0;
+		let messages = [];
+		let text = this.state.value;
+		const time = new Date().toLocaleTimeString().slice(0, 5);
+		const messageBox = {
 			id: 0,
 			sender: 'Maks',
 			text: text,
 			time: time,
 			isAudioMessage: this.state.isAudioMessage,
+			typeMessage: typeMessage,
 		};
 		if (text.trim().length > 0) {
 			console.log('Отправить текст');
@@ -247,7 +259,7 @@ export class Messenger extends Component {
 			this.inDialogForm();
 		} else if (this.state.files.length > 0) {
 			console.log('Отправить медиа');
-			for (var i = 0; i < this.state.files.length; i = 1 + i) {
+			for (let i = 0; i < this.state.files.length; i = 1 + i) {
 				var fileLink = this.state.files[i];
 				messageBox.text = fileLink;
 				messages.push(messageBox);
@@ -290,7 +302,7 @@ export class Messenger extends Component {
 							<MessageForm
 								onClick={this.inDialogForm}
 								onSubmit={(event) => {
-									this.sendMessage(event, false);
+									this.sendMessage(event, false, 'text');
 								}}
 								value={this.state.value}
 								onChange={this.changeStateValue}
@@ -316,6 +328,7 @@ export class Messenger extends Component {
 								audioMessage={this.handleAudioButtonClick}
 								nameDialogBox="Общий чат"
 								web={true}
+								// typeMessage={this.state.typeMessage}
 							/>
 						</Route>
 						<Route path="/personalpage">
