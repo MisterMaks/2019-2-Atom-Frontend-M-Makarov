@@ -101,6 +101,9 @@ body {
 	background-color: orange;
 	margin-left: 95%;
 	margin-bottom: 1%;
+	position: absolute;
+	bottom: 0;
+	right: 1%;
 }
 
 .newButton {

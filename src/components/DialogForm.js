@@ -7,7 +7,7 @@ import { DialogBox } from './DialogBox';
 
 export function DialogForm(props) {
 	return (
-		<div className="dialogForm" /* style={props.styleDialogForm} */>
+		<div className="dialogForm">
 			<div className="dialogs">
 				<div>
 					<Link to="/personalpage">
@@ -22,11 +22,13 @@ export function DialogForm(props) {
 					<DialogBox
 						text={props.lastMessagesTexts}
 						time={props.lastMessagesTimes}
-						/* style={ props.styleDialogBox } */
+						nameDialogBox="Максим Макаров"
+						chatpage={props.chatpages[0]}
 					/>
+					<DialogBox chatpage={props.chatpages[1]} nameDialogBox="Общий чат" />
 				</div>
 			</div>
-			<div className="newButton_place" /* onClick={ props.createDialog } */>
+			<div className="newButton_place">
 				<div className="newButton" />
 			</div>
 		</div>
