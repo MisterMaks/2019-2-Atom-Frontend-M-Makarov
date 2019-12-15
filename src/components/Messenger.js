@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { MessageForm } from './MessageForm';
+import MessageForm from './MessageForm';
 import { PersonalPage } from './PersonalPage';
 import { DialogForm } from './DialogForm';
 
@@ -298,7 +298,7 @@ export class Messenger extends Component {
 								chatpages={['/chatpage/1', '/chatpage/2']}
 							/>
 						</Route>
-						<Route path="/chatpage/1">
+						{/* <Route path="/chatpage/1">
 							<MessageForm
 								onClick={this.inDialogForm}
 								onSubmit={(event) => {
@@ -313,12 +313,12 @@ export class Messenger extends Component {
 								nameDialogBox="Максим Макаров"
 								web={false}
 							/>
-						</Route>
+						</Route> */}
 						<Route path="/chatpage/2">
 							<MessageForm
 								onClick={this.inDialogForm}
 								onSubmit={(event) => {
-									this.sendMessage(event, true);
+									this.sendMessage(event, true, 'text');
 								}}
 								value={this.state.value}
 								onChange={this.changeStateValue}

@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { getMessages } from '../actions';
+
 import { MessageBox } from './MessageBox';
 import { FormInput } from './FormInput';
 
 export function MessageForm(props) {
-	// const [t, changeT] = useState(100);
-	const t = 100;
-	const { web } = props;
-	const [messages, setMessages] = useState([]);
+	// const { web } = props;
+	// const [messages, setMessages] = useState([]);
 	const [style, changeStyle] = useState({
 		display: 'None',
 		height: '100%',
@@ -54,45 +55,49 @@ export function MessageForm(props) {
 	};
 
 	useEffect(() => {
-		setInterval(() => {
-			if (web) {
-				fetch('https://127.0.0.1:8000/chats/get_chat_page/17/', {
-					method: 'GET',
-					mode: 'cors',
-					credentials: 'include',
-				})
-					.then((resp) => resp.json())
-					.then((data) => {
-						if (data.messages && data.messages.length > 0) {
-							const messageList = [];
-							for (let i = data.messages.length - 1; i >= 0; i = -(1 - i)) {
-								const message = data.messages[i];
-								const messageBox = {
-									id: message.message_id,
-									sender: message.from_user_fullname,
-									text: message.content,
-									time: message.added_at.slice(11, 16),
-									isAudioMessage: false,
-								};
-								messageList.push(messageBox);
-							}
-							setMessages(messageList);
-						}
-					});
-			} else {
-				const messageList = JSON.parse(localStorage.getItem('dialog_0')) || [
-					{
-						id: '',
-						text: null,
-						time: null,
-						isAudioMessage: null,
-						typeMessage: null,
-					},
-				];
-				setMessages(messageList);
-			}
-		}, t);
-	}, [web]);
+		const id = setInterval(() => {
+			props.getMessages();
+			// if (web) {
+			// 	fetch('https://127.0.0.1:8000/chats/get_chat_page/17/', {
+			// 		method: 'GET',
+			// 		mode: 'cors',
+			// 		credentials: 'include',
+			// 	})
+			// 		.then((resp) => resp.json())
+			// 		.then((data) => {
+			// 			if (data.messages && data.messages.length > 0) {
+			// 				const messageList = [];
+			// 				for (let i = data.messages.length - 1; i >= 0; i = -(1 - i)) {
+			// 					const message = data.messages[i];
+			// 					const messageBox = {
+			// 						id: message.message_id,
+			// 						sender: message.from_user_fullname,
+			// 						text: message.content,
+			// 						time: message.added_at.slice(11, 16),
+			// 						isAudioMessage: false,
+			// 						typeMessage: "text",
+			// 					};
+			// 					messageList.push(messageBox);
+			// 				}
+			// 				setMessages(messageList);
+			// 			}
+			// 		});
+
+			// } else {
+			// 	const messageList = JSON.parse(localStorage.getItem('dialog_0')) || [
+			// 		{
+			// 			id: '',
+			// 			text: null,
+			// 			time: null,
+			// 			isAudioMessage: null,
+			// 			typeMessage: null,
+			// 		},
+			// 	];
+			// 	setMessages(messageList);
+			// }
+		}, 1000);
+		return () => clearInterval(id);
+	}, [props]); // [web]);
 
 	return (
 		<div
@@ -121,13 +126,13 @@ export function MessageForm(props) {
 			</div>
 			<div className="content">
 				<div className="messageWrap">
-					{messages.map((message) => (
+					{props.messages.map((message) => (
 						<MessageBox
 							key={message.id.toString()}
 							text={message.text}
 							time={message.time}
-							isAudioMessage={message.isAudioMessage}
-							typeMessage={message.typeMessage}
+							isAudioMessage={false}
+							typeMessage="text"
 						/>
 					))}
 				</div>
@@ -145,3 +150,12 @@ export function MessageForm(props) {
 		</div>
 	);
 }
+
+const mapStateToProps = (state) => ({
+	messages: state.messages.messages,
+});
+
+export default connect(
+	mapStateToProps,
+	{ getMessages },
+)(MessageForm);

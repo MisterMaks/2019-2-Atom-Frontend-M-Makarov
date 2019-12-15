@@ -65,6 +65,8 @@
 		"no-shadow": 1,
 		"jsx-a11y/media-has-caption": 1,
 		"jsx-a11y/alt-text": 1,
-		"react/jsx-boolean-value": 0
+		"react/jsx-boolean-value": 0,
+		"semi": 0,
+		"no-tabs": 0
 	}
 }
