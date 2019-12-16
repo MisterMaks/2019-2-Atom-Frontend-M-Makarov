@@ -295,7 +295,7 @@ export class Messenger extends Component {
 						<Route path="/login">
 							<LoginForm />
 						</Route>
-						<Route path="/">
+						<Route path="//">
 							<DialogForm
 								lastMessagesTexts={this.state.textLastMessage}
 								lastMessagesTimes={this.state.timeLastMessage}

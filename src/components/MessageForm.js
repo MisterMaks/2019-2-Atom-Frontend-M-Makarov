@@ -109,7 +109,7 @@ export function MessageForm(props) {
 			<div className="DragNDropPlace" style={style} />
 			<div className="header">
 				<div>
-					<Link to="/2019-2-Atom-Frontend-M-Makarov">
+					<Link to="/">
 						<div className="backButton" onClick={props.onClick} />
 					</Link>
 				</div>
