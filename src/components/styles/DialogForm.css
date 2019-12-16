@@ -143,3 +143,14 @@ body {
 .messageContent {
 	height: 100%;
 }
+
+.exit_button {
+	cursor: pointer;
+	background: url('http://cdn.onlinewebfonts.com/svg/img_145682.png') no-repeat
+		center;
+	background-size: 70%;
+	height: 35px;
+	width: 35px;
+	border-radius: 35px;
+	border: 2px solid black;
+}

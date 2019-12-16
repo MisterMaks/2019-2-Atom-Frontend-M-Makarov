@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MessageForm from './MessageForm';
 import { PersonalPage } from './PersonalPage';
 import { DialogForm } from './DialogForm';
+import { LoginForm } from './LoginForm';
 
 export class Messenger extends Component {
 	constructor(props) {
@@ -291,7 +292,10 @@ export class Messenger extends Component {
 			<Router>
 				<React.Fragment>
 					<Switch>
-						<Route path="/2019-2-Atom-Frontend-M-Makarov">
+						<Route path="/login">
+							<LoginForm />
+						</Route>
+						<Route path="/">
 							<DialogForm
 								lastMessagesTexts={this.state.textLastMessage}
 								lastMessagesTimes={this.state.timeLastMessage}
