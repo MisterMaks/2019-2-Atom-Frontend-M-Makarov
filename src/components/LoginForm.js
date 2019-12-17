@@ -9,7 +9,6 @@ export function LoginForm(props) {
 			credentials: 'include',
 		}).then(() => {
 			window.location = `https://127.0.0.1:8000/social_auth/login/${requestOption}`;
-			localStorage.setItem('login', true);
 		});
 	};
 
@@ -40,7 +39,7 @@ export function LoginForm(props) {
 					<div
 						className="odnoklassniki_div_place login_button"
 						onClick={() => {
-							fetching('odnoklassniki/');
+							fetching('odnoklassniki-oauth2/');
 						}}
 					>
 						Login with Odnoklassniki

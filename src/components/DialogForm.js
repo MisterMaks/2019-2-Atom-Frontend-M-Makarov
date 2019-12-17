@@ -12,8 +12,7 @@ export function DialogForm(props) {
 			mode: 'no-cors',
 			credentials: 'include',
 		}).then(() => {
-			window.location = `http://127.0.0.1:3000/login`;
-			localStorage.setItem('login', false);
+			window.location = `http://127.0.0.1:3000/`;
 		});
 	};
 

@@ -292,16 +292,6 @@ export class Messenger extends Component {
 			<Router>
 				<React.Fragment>
 					<Switch>
-						<Route path="/login">
-							<LoginForm />
-						</Route>
-						{/* <Route path="/">
-							<DialogForm
-								lastMessagesTexts={this.state.textLastMessage}
-								lastMessagesTimes={this.state.timeLastMessage}
-								chatpages={['/chatpage/1', '/chatpage/2']}
-							/>
-						</Route> */}
 						{/* <Route path="/chatpage/1">
 							<MessageForm
 								onClick={this.inDialogForm}
@@ -338,12 +328,18 @@ export class Messenger extends Component {
 						<Route path="/personalpage">
 							<PersonalPage onClick={this.inDialogForm} />
 						</Route>
-						<Route path="/">
+						{/* <Route path="/login">
+							<LoginForm />
+						</Route> */}
+						<Route path="/chats">
 							<DialogForm
 								lastMessagesTexts={this.state.textLastMessage}
 								lastMessagesTimes={this.state.timeLastMessage}
 								chatpages={['/chatpage/1', '/chatpage/2']}
 							/>
+						</Route>
+						<Route path="/">
+							<LoginForm />
 						</Route>
 					</Switch>
 				</React.Fragment>
