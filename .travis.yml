@@ -19,3 +19,4 @@ deploy:
       - master
       - devel
       - homework-8
+      - exam
