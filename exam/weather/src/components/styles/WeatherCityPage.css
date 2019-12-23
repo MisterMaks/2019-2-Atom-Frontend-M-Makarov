@@ -1,0 +1,104 @@
+.weatherCityPage_place {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	outline: 1px solid green;
+	align-content: flex-end;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 40px;
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 0;
+	background-color: #75b5ff;
+	font-size: 20pt;
+	font-family: 'Times New Roman';
+}
+
+.header {
+	z-index: 2;
+}
+
+.backButton {
+	cursor: pointer;
+	background: url('https://image.flaticon.com/icons/svg/93/93634.svg') no-repeat;
+	background-size: 100%;
+	height: 100%;
+	width: 39px;
+	transition-duration: 0.15s;
+}
+
+.backButton:hover {
+	opacity: 1;
+}
+
+.backButton:active {
+	opacity: 0.6;
+}
+
+.cityName_and_currentIconURL_and_currentTemperature {
+  margin-top: 100px;
+  padding-bottom: 60px;
+	width: 100%;
+	display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 40pt;
+  overflow-y: auto;
+  border-bottom: 1px solid #242424;
+}
+
+.cityName {
+  margin-left: 40px;
+}
+
+.currentWeatherPNG_and_currentTemperature {
+  display: flex;
+  margin-right: 40px;
+}
+
+#currentWeatherIcon {
+  width: 100px;
+  margin-top: -18px;
+}
+
+.weatherForecastBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  border-bottom: 1px solid #242424;
+  font-weight: bold;
+  font-size: 20pt;
+}
+
+.day {
+  margin-left: 40px;
+}
+
+.weatherPNG_and_temperature {
+  display: flex;
+  height: 30px;
+  margin-right: 40px;
+}
+
+.weatherPNG {
+  padding-top: 2px;
+}
+
+.city_and_geo {
+  display: flex;
+}
+
+#geo {
+  margin-top: 0px;
+  margin-left: 10px;
+}

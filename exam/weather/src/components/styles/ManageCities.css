@@ -24,8 +24,6 @@
 * {
 	margin: 0;
 	padding: 0;
-
-	/* box-sizing: border-box; */
 }
 
 html,
@@ -63,13 +61,60 @@ body {
 	flex: auto;
 	flex-wrap: wrap;
 	flex-direction: column;
-	overflow-y: auto;
+  overflow-y: auto;
+  padding-bottom: 75px;
 }
 
 .weatherWrap {
 	width: 100%;
 	display: flex;
-	flex-wrap: wrap;
-	align-content: flex-end;
+  flex-direction: column;
+}
+
+.newButton_place {
+	z-index: 1;
+	height: 50px;
+	width: 50px;
+	border-radius: 50px;
+	background-color: orange;
+	margin-left: 95%;
+	margin-bottom: 1%;
+	position: absolute;
+	bottom: 0;
+	right: 1%;
+}
+
+.newButton {
+	cursor: pointer;
+	background: url('https://image.flaticon.com/icons/svg/2132/2132600.svg')
+		no-repeat center;
+	background-size: 70%;
+	height: 50px;
+	width: 50px;
+	border-radius: 50px;
+	background-color: orange;
+	transition: transform 0.5s, background-color 0.5s;
+	box-shadow: 0 0 0 orange;
+	animation: pulse 2s infinite;
+}
+
+.newButton:hover {
+	transform: rotate(30deg);
+	background-color: red;
+	animation: None;
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 #ffd280;
+	}
+
+	70% {
+		box-shadow: 0 0 0 10px #ffd280;
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 #ffd280;
+	}
 }
 
