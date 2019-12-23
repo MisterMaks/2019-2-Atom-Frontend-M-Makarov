@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { MessageForm } from './MessageForm';
+import MessageForm from './MessageForm';
 import { PersonalPage } from './PersonalPage';
 import { DialogForm } from './DialogForm';
+import { LoginForm } from './LoginForm';
 
 export class Messenger extends Component {
 	constructor(props) {
@@ -291,14 +292,7 @@ export class Messenger extends Component {
 			<Router>
 				<React.Fragment>
 					<Switch>
-						<Route path="/2019-2-Atom-Frontend-M-Makarov">
-							<DialogForm
-								lastMessagesTexts={this.state.textLastMessage}
-								lastMessagesTimes={this.state.timeLastMessage}
-								chatpages={['/chatpage/1', '/chatpage/2']}
-							/>
-						</Route>
-						<Route path="/chatpage/1">
+						{/* <Route path="/chatpage/1">
 							<MessageForm
 								onClick={this.inDialogForm}
 								onSubmit={(event) => {
@@ -313,12 +307,12 @@ export class Messenger extends Component {
 								nameDialogBox="Максим Макаров"
 								web={false}
 							/>
-						</Route>
+						</Route> */}
 						<Route path="/chatpage/2">
 							<MessageForm
 								onClick={this.inDialogForm}
 								onSubmit={(event) => {
-									this.sendMessage(event, true);
+									this.sendMessage(event, true, 'text');
 								}}
 								value={this.state.value}
 								onChange={this.changeStateValue}
@@ -333,6 +327,19 @@ export class Messenger extends Component {
 						</Route>
 						<Route path="/personalpage">
 							<PersonalPage onClick={this.inDialogForm} />
+						</Route>
+						{/* <Route path="/login">
+							<LoginForm />
+						</Route> */}
+						<Route path="/chats">
+							<DialogForm
+								lastMessagesTexts={this.state.textLastMessage}
+								lastMessagesTimes={this.state.timeLastMessage}
+								chatpages={['/chatpage/1', '/chatpage/2']}
+							/>
+						</Route>
+						<Route path="/">
+							<LoginForm />
 						</Route>
 					</Switch>
 				</React.Fragment>

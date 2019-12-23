@@ -1,0 +1,43 @@
+.loginForm_place {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	background-color: #4a76a8;
+}
+
+.Sign_in {
+	text-align: center;
+	color: white;
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+.loginMethods_place {
+	display: flex;
+	flex-direction: column;
+}
+
+.login_button {
+	background-color: orange;
+	border-radius: 10px;
+	padding: 10px;
+	max-width: 100%;
+	cursor: pointer;
+	text-align: center;
+	margin: 10px;
+	transition: transform 0.5s, background-color 0.5s;
+	color: white;
+}
+
+.login_button:hover {
+	background-color: red;
+}
+
+.loginMethods_place {
+	background-color: white;
+	margin-top: 10px;
+	border-radius: 10px;
+	border: 2px solid #3a5e88;
+}

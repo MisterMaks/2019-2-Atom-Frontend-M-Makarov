@@ -8,7 +8,7 @@ export function PersonalPage(props) {
 		<div className="personalPage_place">
 			<div className="personalPage_header">
 				<div>
-					<Link to="/2019-2-Atom-Frontend-M-Makarov">
+					<Link to="/chats">
 						<div className="backButton" onClick={props.onClick} />
 					</Link>
 				</div>
