@@ -3,38 +3,54 @@ import React from 'react';
 
 export function MessageBox(props) {
 	const show = { display: 'None' };
-	var href = '';
-	var text = props.text;
-	var srcImage = '';
-	var srcAudioMessage = '';
-	var styleAudioMessage = { display: 'None' };
+	let href = '';
+	let text = '';
+	let srcImage = '';
+	let srcAudioMessage = [];
+	const styleAudioMessage = { display: 'None' };
+	const typeMessage = props.typeMessage;
+	let geo = '';
+	let image = '';
+	let audio = '';
+	// debugger;
 
-	if (localStorage.getItem('dialog_0') != null) {
+	if (props.typeMessage === 'text') {
+		text = props.text;
 		show.display = '';
 	}
 
-	if (props.text) {
-		if (props.text.slice(0, 5) === 'https') {
-			href = props.text;
-			text = '';
-		}
+	if (typeMessage === 'geo') {
+		href = props.text;
+		show.display = '';
+		geo = (
+			<a
+				className="message_link"
+				href={href}
+				style={{ color: 'yellow', textDecoration: 'underline' }}
+			>
+				{href}
+			</a>
+		);
+	}
 
-		if (
-			props.text.slice(0, 9) === 'blob:http' &&
-			props.isAudioMessage === false
-		) {
-			srcImage = text;
-			text = '';
-		}
+	if (typeMessage === 'image') {
+		srcImage = props.text;
+		show.display = '';
+		image = <img src={srcImage} alt={srcImage} width="100%" />;
+	}
 
-		if (
-			props.text.slice(0, 9) === 'blob:http' &&
-			props.isAudioMessage === true
-		) {
-			srcAudioMessage = text;
-			text = '';
-			styleAudioMessage.display = '';
-		}
+	if (typeMessage === 'audio') {
+		srcAudioMessage = props.text;
+		styleAudioMessage.display = '';
+		show.display = '';
+		audio = (
+			<audio
+				className="audioMessage"
+				controls
+				src={srcAudioMessage}
+				style={styleAudioMessage}
+			/>
+		);
 	}
 
 	return (
@@ -42,20 +58,9 @@ export function MessageBox(props) {
 			<div className="messageBox self">
 				<div className="text">
 					{text}
-					<a
-						className="message_link"
-						href={href}
-						style={{ color: 'yellow', textDecoration: 'underline' }}
-					>
-						{href}
-					</a>
-					<img src={srcImage} alt={srcImage} width="100%" />
-					<audio
-						className="audioMessage"
-						controls
-						src={srcAudioMessage}
-						style={styleAudioMessage}
-					/>
+					{geo}
+					{image}
+					{audio}
 				</div>
 				<div className="time">{props.time}</div>
 			</div>

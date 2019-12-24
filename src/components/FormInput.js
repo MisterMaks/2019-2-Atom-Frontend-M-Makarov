@@ -2,29 +2,28 @@ import './styles/FormInput.css';
 import React, { useState } from 'react';
 
 export function FormInput(props) {
+	const pause = {
+		background:
+			"url('http://cdn.onlinewebfonts.com/svg/img_161173.png') center center / 100% no-repeat orange",
+	};
+	const microphone = {
+		background:
+			"url('https://webmii.com/images/mic.png') center center / 100% no-repeat orange",
+	};
+	const stylesMicrophoneButton = [microphone, pause];
 	const input = React.useRef(null);
-	const [styleMicrophoneButton, changeStyleMicrophone] = useState({
-		background: "url('https://webmii.com/images/mic.png') no-repeat orange",
-		backgroundPosition: 'center',
-		backgroundSize: '100%',
-	});
-	const [isRecord, changeRecord] = useState(true);
+	const [isRecord, changeRecord] = useState(0);
 
 	const clickOnMicrophone = (event) => {
 		props.audioMessage(event);
-		if (isRecord === true) {
-			changeStyleMicrophone({
-				background:
-					"url('http://cdn.onlinewebfonts.com/svg/img_161173.png') center center / 100% no-repeat orange",
-			});
-			changeRecord(false);
-		} else {
-			changeStyleMicrophone({
-				background:
-					"url('https://webmii.com/images/mic.png') center center / 100% no-repeat orange",
-			});
-			changeRecord(true);
-		}
+		navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+			if (isRecord === 0) {
+				changeRecord(1);
+			} else {
+				changeRecord(0);
+			}
+			stream.getTracks().forEach((track) => track.stop());
+		});
 	};
 
 	return (
@@ -49,7 +48,7 @@ export function FormInput(props) {
 				<div
 					className="microphoneButton"
 					onClick={clickOnMicrophone}
-					style={styleMicrophoneButton}
+					style={stylesMicrophoneButton[isRecord]}
 				/>
 			</div>
 			<input
