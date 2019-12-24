@@ -72,7 +72,7 @@ export class Weather extends Component {
 	getWeatherFromGeolocation() {
 		const [lat, long] = this.state.location;
 		fetch(
-			`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
+			`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
 			{
 				headers: { origin: document.origin },
 				method: 'GET',
@@ -84,14 +84,14 @@ export class Weather extends Component {
 					location: data.name,
 					locationID: data.id,
 					locationTemperature: data.main.temp,
-					locationIconURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+					locationIconURL: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
 				});
 			});
 	}
 
 	getWeatherFromCityName(event, cityName) {
 		fetch(
-			`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
+			`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
 			{
 				headers: { origin: document.origin },
 				method: 'GET',
@@ -103,7 +103,7 @@ export class Weather extends Component {
 					id: data.id,
 					name: data.name,
 					temperature: data.main.temp,
-					iconURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+					iconURL: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
 				};
 				this.setState({ cities: [...this.state.cities, newCity] });
 			});
@@ -112,7 +112,7 @@ export class Weather extends Component {
 
 	getWeatherFromID(cityID) {
 		fetch(
-			`http://api.openweathermap.org/data/2.5/weather?id=${cityID}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
+			`https://api.openweathermap.org/data/2.5/weather?id=${cityID}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
 			{
 				headers: { origin: document.origin },
 				method: 'GET',
@@ -122,7 +122,7 @@ export class Weather extends Component {
 			.then((data) => {
 				const name = data.name;
 				const temperature = data.main.temp;
-				const iconURL = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+				const iconURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 				const city = {
 					id: cityID,
 					name: name,
@@ -155,7 +155,7 @@ export class Weather extends Component {
 		geo,
 	) {
 		fetch(
-			`http://api.openweathermap.org/data/2.5/forecast?id=${cityID}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
+			`https://api.openweathermap.org/data/2.5/forecast?id=${cityID}&units=metric&APPID=22974c3e3aacf49aa6ed8191ccca8d39`,
 			{
 				headers: { origin: document.origin },
 				method: 'GET',
@@ -166,15 +166,15 @@ export class Weather extends Component {
 				const forecast = data.list;
 				const tomorrow = {
 					temperature: forecast[8].main.temp,
-					weatherIconURL: `http://openweathermap.org/img/wn/${forecast[8].weather[0].icon}@2x.png`,
+					weatherIconURL: `https://openweathermap.org/img/wn/${forecast[8].weather[0].icon}@2x.png`,
 				};
 				const dayAfterTomorrow = {
 					temperature: forecast[16].main.temp,
-					weatherIconURL: `http://openweathermap.org/img/wn/${forecast[16].weather[0].icon}@2x.png`,
+					weatherIconURL: `https://openweathermap.org/img/wn/${forecast[16].weather[0].icon}@2x.png`,
 				};
 				const thirdDay = {
 					temperature: forecast[24].main.temp,
-					weatherIconURL: `http://openweathermap.org/img/wn/${forecast[24].weather[0].icon}@2x.png`,
+					weatherIconURL: `https://openweathermap.org/img/wn/${forecast[24].weather[0].icon}@2x.png`,
 				};
 
 				this.setState({
