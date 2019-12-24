@@ -43,62 +43,62 @@
 }
 
 .cityName_and_currentIconURL_and_currentTemperature {
-  margin-top: 100px;
-  padding-bottom: 60px;
+	margin-top: 100px;
+	padding-bottom: 60px;
 	width: 100%;
 	display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: 40pt;
-  overflow-y: auto;
-  border-bottom: 1px solid #242424;
+	flex-direction: row;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: 40pt;
+	overflow-y: auto;
+	border-bottom: 1px solid #242424;
 }
 
 .cityName {
-  margin-left: 40px;
+	margin-left: 40px;
 }
 
 .currentWeatherPNG_and_currentTemperature {
-  display: flex;
-  margin-right: 40px;
+	display: flex;
+	margin-right: 40px;
 }
 
 #currentWeatherIcon {
-  width: 100px;
-  margin-top: -18px;
+	width: 100px;
+	margin-top: -18px;
 }
 
 .weatherForecastBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  border-bottom: 1px solid #242424;
-  font-weight: bold;
-  font-size: 20pt;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+	border-bottom: 1px solid #242424;
+	font-weight: bold;
+	font-size: 20pt;
 }
 
 .day {
-  margin-left: 40px;
+	margin-left: 40px;
 }
 
 .weatherPNG_and_temperature {
-  display: flex;
-  height: 30px;
-  margin-right: 40px;
+	display: flex;
+	height: 30px;
+	margin-right: 40px;
 }
 
 .weatherPNG {
-  padding-top: 2px;
+	padding-top: 2px;
 }
 
 .city_and_geo {
-  display: flex;
+	display: flex;
 }
 
 #geo {
-  margin-top: 0px;
-  margin-left: 10px;
+	margin-top: 0px;
+	margin-left: 12px;
 }
